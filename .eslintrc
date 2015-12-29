@@ -12,7 +12,8 @@
     "no-unused-vars": 1,
     "no-use-before-define": 1,
     "object-shorthand": 1,
-    "no-new": 0
+    "no-new": 0,
+    "space-after-keywords": 0
   },
   "plugins": [
     "html"
