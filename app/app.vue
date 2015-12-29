@@ -3,7 +3,7 @@
 </template>
 
 <style lang="scss">
-  $color: blue;
+  $color: red;
 
   body {
     display: flex;

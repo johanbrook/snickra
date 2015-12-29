@@ -1,3 +1,5 @@
+'use strict';
+
 const electron = require('electron');
 const crashReporter = electron.crashReporter;
 
@@ -19,19 +21,19 @@ menubar.on('ready', () => {
 
   mainWindow = menubar.window;
 
+  mainWindow.on('closed', () => {
+    mainWindow = null;
+  });
+
   if (process.env.HOT) {
     // Menubar implicitly loads index.html from the project root, but
     // we wanna load the dev server's index.html instead.
-    mainWindow.loadURL('http://localhost:8080/index.html');
+    mainWindow.loadURL('http://localhost:8080/app/app.html');
   } else {
-    mainWindow.loadURL(`file://${__dirname}/app/app.html`);
+    mainWindow.loadURL(`file://${__dirname}/index.html`);
   }
 
   if (process.env.NODE_ENV === 'development') {
     mainWindow.openDevTools();
   }
-});
-
-mainWindow.on('closed', () => {
-  mainWindow = null;
 });
