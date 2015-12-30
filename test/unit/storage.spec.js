@@ -2,16 +2,17 @@
 
 const test = require('tape');
 const Storage = require('../../app/storage');
+const _ = require('underscore');
 
-const getSiteFixture = () => {
-  return {
+const getSiteFixture = (ex) => {
+  return _.extend({
     name: 'Site',
     url: 'http://site.com',
     commands: {
       publish: 'foo',
       serve: 'bar'
     }
-  };
+  }, ex);
 };
 
 const reset = () => window.localStorage.removeItem('snickra');
@@ -105,6 +106,27 @@ test('remove a site', t => {
 
   t.notOk(site,
     '#removeSite should remove a site');
+
+  t.end();
+});
+
+test('get all sites', t => {
+  reset();
+
+  const store = new Storage();
+
+  store.saveSite(getSiteFixture({name: 'Name 1'}));
+  store.saveSite(getSiteFixture({name: 'Name 2'}));
+  store.saveSite(getSiteFixture({name: 'Name 3'}));
+
+  const sites = store.getSites();
+
+  t.equal(sites.length, 3,
+    '#getSites should return all sites');
+
+  t.equal(sites[0].name, 'Name 1');
+  t.equal(sites[1].name, 'Name 2');
+  t.equal(sites[2].name, 'Name 3');
 
   t.end();
 });
