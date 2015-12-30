@@ -13,7 +13,8 @@
     "no-use-before-define": 1,
     "object-shorthand": 1,
     "no-new": 0,
-    "space-after-keywords": 0
+    "space-after-keywords": 0,
+    "object-curly-spacing": 0
   },
   "plugins": [
     "html"
