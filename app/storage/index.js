@@ -1,46 +1,27 @@
 'use strict';
 
-const LocalStorageAdapter = require('./LocalStorageAdapter');
 const _ = require('underscore');
 
-const schema = require('js-schema');
-const ADAPTERS = ['localStorage'];
+import {LocalStorageAdapter} from './LocalStorageAdapter';
+import {isValid, sanitize} from './model';
 
-const Site = schema({
-  name: String,
-  url: String,
-  commands: {
-    publish: String,
-    serve: String
-  }
-});
+module.exports = {
 
-module.exports = class Storage {
-
-  constructor(adapterName) {
-    adapterName = adapterName || 'localStorage';
-    if(ADAPTERS.indexOf(adapterName) === -1) {
-      throw new Error(`Unsupported adapter: ${adapterName}`);
-    }
-
-    if(adapterName === 'localStorage') {
-      this.store = new LocalStorageAdapter('snickra');
-    }
-  }
+  store: new LocalStorageAdapter('snickra'),
 
   saveSite(site) {
     /* eslint new-cap: 0 */
-    if(!Site(site)) {
-      throw new Error(Site.errors(site));
+    if(!isValid(site)) {
+      throw new Error('Invalid site: ' + site);
     }
 
     const sites = this.getSites();
 
-    sites.push(site);
+    sites.push(sanitize(site));
 
     this.store.save('sites', sites);
     return this.store.get('sites').length;
-  }
+  },
 
   updateSite(site) {
     if(!site.url) {
@@ -56,16 +37,16 @@ module.exports = class Storage {
     }
 
     return false;
-  }
+  },
 
   getSites() {
     return this.store.get('sites') || [];
-  }
+  },
 
   getSite(url) {
     const sites = this.store.get('sites') || [];
     return _.findWhere(sites, {url});
-  }
+  },
 
   removeSite(url) {
     const sites = this.store.get('sites') || [];

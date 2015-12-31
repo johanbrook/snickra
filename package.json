@@ -79,7 +79,7 @@
     "menubar": "^3.0.0",
     "underscore": "^1.8.3",
     "vue": "^1.0.8",
-    "vue-router": "^0.7.5"
+    "vue-router": "^0.7.7"
   },
   "devEngines": {
     "node": "4.x || 5.x",

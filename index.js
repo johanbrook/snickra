@@ -21,6 +21,9 @@ menubar.on('ready', () => {
 
   mainWindow = menubar.window;
 
+  mainWindow.setSize(315, 356);
+  mainWindow.setResizable(false);
+
   mainWindow.on('closed', () => {
     mainWindow = null;
   });

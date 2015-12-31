@@ -1,6 +1,6 @@
 'use strict';
 
-module.exports = class LocalStorageAdapter {
+export class LocalStorageAdapter {
 
   constructor(namespace) {
     if(!namespace) {
@@ -43,4 +43,4 @@ module.exports = class LocalStorageAdapter {
       this.persistStore(item);
     }
   }
-};
+}
